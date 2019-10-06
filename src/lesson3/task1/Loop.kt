@@ -2,6 +2,7 @@
 
 package lesson3.task1
 
+import lesson1.task1.sqr
 import kotlin.math.sqrt
 
 /**
@@ -12,7 +13,7 @@ import kotlin.math.sqrt
 fun factorial(n: Int): Double {
     var result = 1.0
     for (i in 1..n) {
-        result = result * i // Please do not fix in master
+        result *= i // Please do not fix in master
     }
     return result
 }
@@ -67,7 +68,16 @@ fun digitCountInNumber(n: Int, m: Int): Int =
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun digitNumber(n: Int): Int = TODO()
+fun digitNumber(n: Int): Int {
+    var count = 0
+    var number = n
+    if (number == 0) return 1 else
+    while ( number > 0 ) {
+        number /= 10
+        count ++
+    }
+    return count
+}
 
 /**
  * Простая
@@ -75,7 +85,9 @@ fun digitNumber(n: Int): Int = TODO()
  * Найти число Фибоначчи из ряда 1, 1, 2, 3, 5, 8, 13, 21, ... с номером n.
  * Ряд Фибоначчи определён следующим образом: fib(1) = 1, fib(2) = 1, fib(n+2) = fib(n) + fib(n+1)
  */
-fun fib(n: Int): Int = TODO()
+fun fib(n: Int): Int = if ( n in 1..2) 1 else {
+   fib (n - 2) + fib (n - 1)
+}
 
 /**
  * Простая
@@ -85,19 +97,29 @@ fun fib(n: Int): Int = TODO()
  */
 fun lcm(m: Int, n: Int): Int = TODO()
 
+
 /**
  * Простая
  *
  * Для заданного числа n > 1 найти минимальный делитель, превышающий 1
  */
-fun minDivisor(n: Int): Int = TODO()
+fun minDivisor(n: Int): Int {
+var number = n
+for ( k in 2..sqrt(n.toDouble()).toInt() ) {
+    if (n % k == 0) {
+        number = k
+        break
+    }
+}
+return number
+}
 
 /**
  * Простая
  *
  * Для заданного числа n > 1 найти максимальный делитель, меньший n
  */
-fun maxDivisor(n: Int): Int = TODO()
+fun maxDivisor(n: Int): Int = n / minDivisor(n)
 
 /**
  * Простая
@@ -108,6 +130,7 @@ fun maxDivisor(n: Int): Int = TODO()
  */
 fun isCoPrime(m: Int, n: Int): Boolean = TODO()
 
+
 /**
  * Простая
  *
@@ -115,7 +138,12 @@ fun isCoPrime(m: Int, n: Int): Boolean = TODO()
  * то есть, существует ли такое целое k, что m <= k*k <= n.
  * Например, для интервала 21..28 21 <= 5*5 <= 28, а для интервала 51..61 квадрата не существует.
  */
-fun squareBetweenExists(m: Int, n: Int): Boolean = TODO()
+fun squareBetweenExists(m: Int, n: Int): Boolean {
+        for ( k in m..n ) {
+            if (sqr(sqrt(k.toDouble()).toInt()) == k) return true
+        }
+        return false
+    }
 
 /**
  * Средняя
