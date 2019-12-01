@@ -69,8 +69,6 @@ fun ageDescription(age: Int): String {
     return when {
         (age % 10 in 2..4 && age !in 12..14 && age !in 112..114) -> "$age года"
         (age % 10 == 1 && age != 11 && age != 111) -> "$age год"
-
-
         else -> "$age лет"
     }
 }
@@ -118,7 +116,7 @@ fun whichRookThreatens(
 
         else -> 0
     }
-}
+  }
 
 /**
  * Простая
@@ -139,10 +137,7 @@ fun rookOrBishopThreatens(
         (kingX == rookX || kingY == rookY) && (abs(kingX - bishopX) == abs(kingY - bishopY)) -> 3
         (kingX == rookX || kingY == rookY) && (abs(kingX - bishopX) != abs(kingY - bishopY)) -> 1
          kingX != rookX && kingY != rookY && (abs(kingX - bishopX) == abs(kingY - bishopY)) -> 2
-
-
         else -> 0
-
     }
 }
 /**
@@ -154,15 +149,16 @@ fun rookOrBishopThreatens(
  * Если такой треугольник не существует, вернуть -1.
  */
 fun triangleKind(a: Double, b: Double, c: Double): Int {
-    val medium = a + b + c - minOf(a,b,c) - maxOf(a,b,c)
+    val min = minOf(a, b, c)
+    val max = maxOf(a, b, c)
+    val medium = a + b + c - min - max
     return when {
-        maxOf(a,b,c) * maxOf(a,b,c) == minOf(a,b,c) * minOf(a,b,c) + medium * medium -> 1
-        maxOf(a,b,c) * maxOf(a,b,c) < minOf(a,b,c) * minOf(a,b,c) + medium * medium -> 0
-        maxOf(a,b,c) > minOf(a,b,c) + medium -> -1
+        max * max == min * min + medium * medium -> 1
+        max * max < min * min + medium * medium -> 0
+        max > min + medium -> -1
         else -> 2
     }
 }
-
 /**
  * Средняя
  *
@@ -171,14 +167,11 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
  * Найти длину пересечения отрезков AB и CD.
  * Если пересечения нет, вернуть -1.
  */
-fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int {
-    return when {
+fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int =
+     when {
         (a <= c) && (d >= b) && (c <= b) -> b - c
         (a >= c) && (d <= b) && (a <= d) -> d - a
         (a <= c) && (d <= b) -> d - c
         (a >= c) && (d >= b) -> b - a
         else -> -1
-
-
     }
-}

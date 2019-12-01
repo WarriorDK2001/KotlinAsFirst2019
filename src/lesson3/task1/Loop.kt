@@ -3,7 +3,10 @@
 package lesson3.task1
 
 import lesson1.task1.sqr
+import java.lang.Math.pow
+import kotlin.math.PI
 import kotlin.math.abs
+import kotlin.math.pow
 import kotlin.math.sqrt
 
 /**
@@ -72,10 +75,10 @@ fun digitCountInNumber(n: Int, m: Int): Int =
 fun digitNumber(n: Int): Int {
     var count = 0
     var number = abs(n)
-    if (number == 0) return 1 else
-    while ( number > 0 ) {
+    if (number == 0) return 1
+    while (number > 0){
         number /= 10
-        count ++
+        count++
     }
     return count
 }
@@ -89,7 +92,7 @@ fun digitNumber(n: Int): Int {
 fun fib(n: Int): Int {
     var fib1 = 1
     var fib2 = 1
-    var fib3 = fib1 +fib2
+    var fib3 = fib1 + fib2
     if (n < 3) return 1
     for (i in 3 until n) {
         fib1 = fib2
@@ -114,8 +117,8 @@ fun nod(m: Int, n: Int): Int {
         else number2 -= number1
     }
     return number1
-}
-fun lcm(m: Int, n: Int): Int = n * m / nod(m,n)
+ }
+fun lcm(m: Int, n: Int): Int = n * m / nod(m, n)
 
 
 
@@ -126,10 +129,10 @@ fun lcm(m: Int, n: Int): Int = n * m / nod(m,n)
  */
 fun minDivisor(n: Int): Int {
 var number = n
-for (k in 2..sqrt(n.toDouble()).toInt()) {
+for (k in 2..sqrt(n.toDouble()).toInt()){
     if (n % k == 0) {
         number = k
-        break
+         break
     }
 }
 return number
@@ -149,7 +152,7 @@ fun maxDivisor(n: Int): Int = n / minDivisor(n)
  * Взаимно простые числа не имеют общих делителей, кроме 1.
  * Например, 25 и 49 взаимно простые, а 6 и 8 -- нет.
  */
-fun isCoPrime(m: Int, n: Int): Boolean = nod(m ,n) == 1
+fun isCoPrime(m: Int, n: Int): Boolean = nod(m, n) == 1
 
 
 /**
@@ -184,10 +187,10 @@ fun squareBetweenExists(m: Int, n: Int): Boolean {
 fun collatzSteps(x: Int): Int {
     var count = 0
     var x1 = x
-    while (x1 !=1) {
-        if  (x1 % 2 == 0) x1 /= 2
+    while (x1 != 1) {
+        if (x1 % 2 == 0) x1 /= 2
         else x1 = 3 * x1 + 1
-        count ++
+        count++
     }
     return count
 }
@@ -201,8 +204,18 @@ fun collatzSteps(x: Int): Int {
  * Подумайте, как добиться более быстрой сходимости ряда при больших значениях x.
  * Использовать kotlin.math.sin и другие стандартные реализации функции синуса в этой задаче запрещается.
  */
-fun sin(x: Double, eps: Double): Double = TODO()
-
+fun sin(x: Double, eps: Double): Double {
+    val x1 = x % (2 * PI)
+    var result = 0.0
+    var degree = 1
+    var next = x1.pow(2 * degree - 1) * (-1.0).pow(degree - 1) / factorial(2 * degree - 1)
+    while (abs(next) > eps) {
+        result += next
+        degree++
+        next = x1.pow(2 * degree - 1) * (-1.0).pow(degree - 1) / factorial(2 * degree - 1)
+    }
+    return result
+}
 /**
  * Средняя
  *
@@ -212,7 +225,18 @@ fun sin(x: Double, eps: Double): Double = TODO()
  * Подумайте, как добиться более быстрой сходимости ряда при больших значениях x.
  * Использовать kotlin.math.cos и другие стандартные реализации функции косинуса в этой задаче запрещается.
  */
-fun cos(x: Double, eps: Double): Double = TODO()
+fun cos(x: Double, eps: Double): Double {
+    val x1 = x % (2 * PI)
+    var result = 0.0
+    var degree = 0
+    var next = x1.pow(2 * degree) * (-1.0).pow(degree) / factorial(2 * degree)
+    while (abs(next) > eps) {
+        result += next
+        degree ++
+        next = x1.pow(2 *degree) * (-1.0).pow(degree) / factorial(2 * degree)
+    }
+  return result
+}
 
 /**
  * Средняя
@@ -241,10 +265,7 @@ fun revert(n: Int): Int {
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun isPalindrome(n: Int): Boolean {
-    return if (n == revert(n)) return true
-    else false
-}
+fun isPalindrome(n: Int): Boolean = n == revert(n)
 /**
  * Средняя
  *
@@ -260,7 +281,7 @@ fun hasDifferentDigits(n: Int): Boolean {
         digit1 /= 10
     }
     return false
-}
+ }
 /**
  * Сложная
  *
