@@ -22,6 +22,7 @@ fun pointInsideCircle(x: Double, y: Double, x0: Double, y0: Double, r: Double) =
  */
 fun isNumberHappy(number: Int): Boolean =
     (number % 10 + number % 100 / 10) == (number / 1000 + number % 1000 / 100)
+
 /**
  * Простая
  *
@@ -30,7 +31,7 @@ fun isNumberHappy(number: Int): Boolean =
  * Считать, что ферзи не могут загораживать друг друга.
  */
 fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean =
-        (x1 == x2) || (y1 == y2) || (abs(x1 - x2) == abs(y1 - y2))
+    (x1 == x2) || (y1 == y2) || (abs(x1 - x2) == abs(y1 - y2))
 
 /**
  * Простая
@@ -38,15 +39,15 @@ fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean =
  * Дан номер месяца (от 1 до 12 включительно) и год (положительный).
  * Вернуть число дней в этом месяце этого года по григорианскому календарю.
  */
-fun daysInMonth(month: Int, year: Int): Int {
-    return when {
+fun daysInMonth(month: Int, year: Int): Int =
+    when {
         month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12 -> 31
         month == 4 || month == 6 || month == 9 || month == 11 -> 30
         (year % 4 == 0) && (month == 2) && (year % 100 != 0) -> 29
         (year % 4 == 0) && (month == 2) && (year % 100 == 0) && (year % 400 == 0) -> 29
         else -> 28
     }
-}
+
 
 /**
  * Средняя
@@ -59,7 +60,8 @@ fun circleInside(
     x1: Double, y1: Double, r1: Double,
     x2: Double, y2: Double, r2: Double
 ): Boolean =
-        r2 >= sqrt(sqr(x1 - x2) + sqr(y1 - y2)) + r1
+    r2 >= sqrt(sqr(x1 - x2) + sqr(y1 - y2)) + r1
+
 /**
  * Средняя
  *
@@ -70,7 +72,7 @@ fun circleInside(
  * Вернуть true, если кирпич пройдёт
  */
 fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean =
-     when {
+    when {
         ((a <= r) && (b <= s)) || ((a <= s) && (b <= r)) -> true
         ((a <= r) && (c <= s)) || ((a <= s) && (c <= r)) -> true
         ((b <= r) && (c <= s)) || ((b <= s) && (c <= r)) -> true

@@ -151,8 +151,9 @@ fun center(list: MutableList<Double>): MutableList<Double> {
             val element = list[i]
             list[i] = element - arithmetic
         }
-      return list
+    return list
 }
+
 /**
  * Средняя
  *
@@ -160,12 +161,11 @@ fun center(list: MutableList<Double>): MutableList<Double> {
  * представленные в виде списков a и b. Скалярное произведение считать по формуле:
  * C = a1b1 + a2b2 + ... + aNbN. Произведение пустых векторов считать равным 0.
  */
-fun times(a: List<Int>, b: List<Int>): Int{
+fun times(a: List<Int>, b: List<Int>): Int {
     var result = 0
-    if (a.isEmpty() && b.isEmpty()) return 0 else
-         for (i in a.indices) {
-             result += a[i] * b[i]
-         }
+    for (i in a.indices) {
+        result += a[i] * b[i]
+    }
     return result
 }
 
@@ -180,12 +180,11 @@ fun times(a: List<Int>, b: List<Int>): Int{
 fun polynom(p: List<Int>, x: Int): Int {
     var result = 0
     var degree = 1
-    if (p.isEmpty()) return 0 else
-        for (i in p.indices) {
-            result += p[i] * degree
-            degree *= x
-        }
-        return result
+    for (i in p.indices) {
+        result += p[i] * degree
+        degree *= x
+    }
+    return result
 }
 
 /**
@@ -199,9 +198,9 @@ fun polynom(p: List<Int>, x: Int): Int {
  * Обратите внимание, что данная функция должна изменять содержание списка list, а не его копии.
  */
 fun accumulate(list: MutableList<Int>): MutableList<Int> {
-        for (i in 1 until list.size) {
-                list[i] += list[i-1]
-        }
+    for (i in 1 until list.size) {
+        list[i] += list[i - 1]
+    }
     return list
 }
 
@@ -215,14 +214,14 @@ fun accumulate(list: MutableList<Int>): MutableList<Int> {
 fun factorize(n: Int): List<Int> {
     var x = n
     val result = mutableListOf<Int>()
-    while (x > 1){
-        if (x % 2 == 0){
+    while (x > 1) {
+        if (x % 2 == 0) {
             result.add(2)
             x /= 2
             continue
         }
         var y = 3
-        while (x % y != 0){
+        while (x % y != 0) {
             y += 2
         }
         result.add(y)
@@ -238,7 +237,7 @@ fun factorize(n: Int): List<Int> {
  * Результат разложения вернуть в виде строки, например 75 -> 3*5*5
  * Множители в результирующей строке должны располагаться по возрастанию.
  */
-fun factorizeToString(n: Int): String = factorize(n).joinToString ( separator = "*" )
+fun factorizeToString(n: Int): String = factorize(n).joinToString(separator = "*")
 
 /**
  * Средняя
@@ -251,12 +250,12 @@ fun convert(n: Int, base: Int): List<Int> {
     var x = n
     var result = mutableListOf<Int>()
     while (x >= base) {
-        result.add(0,x % base)
+        result.add(0, x % base)
         x /= base
-      }
-    result.add(0,x)
-    return result
     }
+    result.add(0, x)
+    return result
+}
 
 /**
  * Сложная
@@ -269,7 +268,9 @@ fun convert(n: Int, base: Int): List<Int> {
  * Использовать функции стандартной библиотеки, напрямую и полностью решающие данную задачу
  * (например, n.toString(base) и подобные), запрещается.
  */
-fun convertToString(n: Int, base: Int): String = TODO()
+fun convertToString(n: Int, base: Int): String {
+    return convert(n, base).joinToString(separator = "") { if (it < 10) "$it" else (it + 87).toChar().toString() }
+}
 
 /**
  * Средняя
@@ -281,10 +282,10 @@ fun convertToString(n: Int, base: Int): String = TODO()
 fun decimal(digits: List<Int>, base: Int): Int {
     var result = 0
     val x = digits.size - 1
-    for (i in digits.indices){
+    for (i in digits.indices) {
         result += digits[i] * base.toDouble().pow(x - i).toInt()
     }
- return result
+    return result
 }
 
 /**

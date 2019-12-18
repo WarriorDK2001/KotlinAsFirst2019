@@ -2,6 +2,8 @@
 
 package lesson6.task1
 
+import lesson2.task2.daysInMonth
+
 /**
  * Пример
  *
@@ -69,7 +71,22 @@ fun main() {
  * Обратите внимание: некорректная с точки зрения календаря дата (например, 30.02.2009) считается неверными
  * входными данными.
  */
-fun dateStrToDigit(str: String): String = TODO()
+fun dateStrToDigit(str: String): String {
+    val parts = str.split(" ")
+    val allmonths = listOf<String>(
+        "января", "февраля", "марта", "апреля", "мая", "июня",
+        "июля", "августа", "сетября", "октября", "ноября", "декабря"
+    )
+    if (parts.size != 3) return ""
+    val day = parts[0].toIntOrNull() ?: return ""
+    var month = parts[1]
+    val year = parts[2].toIntOrNull() ?: return ""
+    if (allmonths.indexOf(parts[1]) + 1 in 1..12) month = (allmonths.indexOf(parts[1]) + 1).toString()
+    else return ""
+    if (month == parts[1]) return ""
+    return if (day !in 1..daysInMonth(month.toInt(), year)) ""
+    else "${twoDigitStr(day)}.${twoDigitStr(month.toInt())}.$year"
+}
 
 /**
  * Средняя
@@ -81,7 +98,23 @@ fun dateStrToDigit(str: String): String = TODO()
  * Обратите внимание: некорректная с точки зрения календаря дата (например, 30 февраля 2009) считается неверными
  * входными данными.
  */
-fun dateDigitToStr(digital: String): String = TODO()
+fun dateDigitToStr(digital: String): String {
+    val parts = digital.split(".")
+    val allMonths = mapOf(
+        "января" to "01", "февраля" to "02",
+        "марта" to "03", "апреля" to "04", "мая" to "05", "июня" to "06", "июля" to "07", "августа" to "08",
+        "сентября" to "09", "октября" to "10", "ноября" to "11", "декабря" to "12"
+    )
+    if (parts.size != 3) return ""
+    val day = parts[0].toIntOrNull() ?: return ""
+    val year = parts[2].toIntOrNull() ?: return ""
+    var month = parts[1]
+    for ((names, dates) in allMonths) if (month == dates) month = names
+    if (month == parts[1]) return ""
+    return if (day !in 1..daysInMonth(allMonths.getOrDefault(month, "0").toInt(), year)) ""
+    else "$day $month $year"
+}
+
 
 /**
  * Средняя

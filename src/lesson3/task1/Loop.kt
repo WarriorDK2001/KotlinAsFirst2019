@@ -76,7 +76,7 @@ fun digitNumber(n: Int): Int {
     var count = 0
     var number = abs(n)
     if (number == 0) return 1
-    while (number > 0){
+    while (number > 0) {
         number /= 10
         count++
     }
@@ -99,7 +99,7 @@ fun fib(n: Int): Int {
         fib2 = fib3
         fib3 = fib1 + fib2
     }
-return fib3
+    return fib3
 }
 
 /**
@@ -117,9 +117,9 @@ fun nod(m: Int, n: Int): Int {
         else number2 -= number1
     }
     return number1
- }
-fun lcm(m: Int, n: Int): Int = n * m / nod(m, n)
+}
 
+fun lcm(m: Int, n: Int): Int = n * m / nod(m, n)
 
 
 /**
@@ -128,14 +128,14 @@ fun lcm(m: Int, n: Int): Int = n * m / nod(m, n)
  * Для заданного числа n > 1 найти минимальный делитель, превышающий 1
  */
 fun minDivisor(n: Int): Int {
-var number = n
-for (k in 2..sqrt(n.toDouble()).toInt()){
-    if (n % k == 0) {
-        number = k
-         break
+    var number = n
+    for (k in 2..sqrt(n.toDouble()).toInt()) {
+        if (n % k == 0) {
+            number = k
+            break
+        }
     }
-}
-return number
+    return number
 }
 
 /**
@@ -163,9 +163,9 @@ fun isCoPrime(m: Int, n: Int): Boolean = nod(m, n) == 1
  * Например, для интервала 21..28 21 <= 5*5 <= 28, а для интервала 51..61 квадрата не существует.
  */
 fun squareBetweenExists(m: Int, n: Int): Boolean {
-        for (k in m..n)
-            if (sqr(sqrt(k.toDouble()).toInt()) == k) return true
-        return false
+    for (k in m..n)
+        if (sqr(sqrt(k.toDouble()).toInt()) == k) return true
+    return false
 }
 
 /**
@@ -216,6 +216,7 @@ fun sin(x: Double, eps: Double): Double {
     }
     return result
 }
+
 /**
  * Средняя
  *
@@ -232,10 +233,10 @@ fun cos(x: Double, eps: Double): Double {
     var next = x1.pow(2 * degree) * (-1.0).pow(degree) / factorial(2 * degree)
     while (abs(next) > eps) {
         result += next
-        degree ++
-        next = x1.pow(2 *degree) * (-1.0).pow(degree) / factorial(2 * degree)
+        degree++
+        next = x1.pow(2 * degree) * (-1.0).pow(degree) / factorial(2 * degree)
     }
-  return result
+    return result
 }
 
 /**
@@ -256,6 +257,7 @@ fun revert(n: Int): Int {
     }
     return number3
 }
+
 /**
  * Средняя
  *
@@ -266,6 +268,7 @@ fun revert(n: Int): Int {
  * Использовать операции со строками в этой задаче запрещается.
  */
 fun isPalindrome(n: Int): Boolean = n == revert(n)
+
 /**
  * Средняя
  *
@@ -281,7 +284,8 @@ fun hasDifferentDigits(n: Int): Boolean {
         digit1 /= 10
     }
     return false
- }
+}
+
 /**
  * Сложная
  *
@@ -291,7 +295,45 @@ fun hasDifferentDigits(n: Int): Boolean {
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun squareSequenceDigit(n: Int): Int = TODO()
+fun squareSequenceDigit(n: Int): Int {
+    var result = 0
+    var count = 0
+    var number1 = 1
+    var number2 = 0
+    var k = 1
+    var m = 0
+    while (count != n) {
+        number2 = number1
+        number1 = sqr(number1)
+        while ((number1 % 10 != 0) || (number1 / 10 != 0)) {
+            count++
+            while (number1 > k * 10) k *= 10
+            result = number1 / k
+            if (count == n) {
+                break
+            }
+            if ((number1 / 100 != 0) && (number1 % 10 == 0)) {
+                m = number1
+                while ((m / 100 != 0) && (m % 10 == 0)) {
+                    result = 0
+                    while (m / 10 != 0) {
+                        count++
+                        m /= 10
+                    }
+                    if (count == n) {
+                        break
+                    }
+                }
+            }
+            if (k == 1) number1 /= 10
+            else number1 %= k
+            k = 1
+        }
+        number1 = number2 + 1
+    }
+    return result
+}
+
 
 /**
  * Сложная
@@ -302,4 +344,27 @@ fun squareSequenceDigit(n: Int): Int = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun fibSequenceDigit(n: Int): Int = TODO()
+fun fibSequenceDigit(n: Int): Int {
+    var f = 0
+    var i = 3
+    var result = 0
+    var count = 2
+    var k = 1
+    if (n < 3) return 1
+    while (count != n) {
+        f = fib(i)
+        while ((f % 10 != 0) || (f / 10 != 0)) {
+            count++
+            while (f > k * 10) k *= 10
+            result = f / k
+            if (count == n) {
+                break
+            }
+            if (k == 1) f /= 10
+            else f %= k
+            k = 1
+        }
+        i++
+    }
+    return result
+}
