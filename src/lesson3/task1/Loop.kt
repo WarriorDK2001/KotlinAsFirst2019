@@ -305,32 +305,15 @@ fun squareSequenceDigit(n: Int): Int {
     while (count != n) {
         number2 = number1
         number1 = sqr(number1)
-        while ((number1 % 10 != 0) || (number1 / 10 != 0)) {
-            count++
-            while (number1 > k * 10) k *= 10
-            result = number1 / k
-            if (count == n) {
-                break
-            }
-            if ((number1 / 100 != 0) && (number1 % 10 == 0)) {
-                m = number1
-                while ((m / 100 != 0) && (m % 10 == 0)) {
-                    result = 0
-                    while (m / 10 != 0) {
-                        count++
-                        m /= 10
-                    }
-                    if (count == n) {
-                        break
-                    }
-                }
-            }
-            if (k == 1) number1 /= 10
-            else number1 %= k
-            k = 1
+        count += digitNumber(number1)
+        while (count > n) {
+            count--
+            number1 /= 10
         }
+        if (count == n) break
         number1 = number2 + 1
     }
+    result = number1 % 10
     return result
 }
 
@@ -353,18 +336,14 @@ fun fibSequenceDigit(n: Int): Int {
     if (n < 3) return 1
     while (count != n) {
         f = fib(i)
-        while ((f % 10 != 0) || (f / 10 != 0)) {
-            count++
-            while (f > k * 10) k *= 10
-            result = f / k
-            if (count == n) {
-                break
-            }
-            if (k == 1) f /= 10
-            else f %= k
-            k = 1
+        count += digitNumber(f)
+        while (count > n) {
+            count--
+            f /= 10
         }
+        if (count == n) break
         i++
     }
+    result = f % 10
     return result
 }

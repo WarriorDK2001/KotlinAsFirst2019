@@ -72,21 +72,28 @@ fun main() {
  * входными данными.
  */
 fun dateStrToDigit(str: String): String {
-    val parts = str.split(" ")
-    val allmonths = listOf<String>(
-        "января", "февраля", "марта", "апреля", "мая", "июня",
-        "июля", "августа", "сетября", "октября", "ноября", "декабря"
-    )
-    if (parts.size != 3) return ""
-    val day = parts[0].toIntOrNull() ?: return ""
-    var month = parts[1]
-    val year = parts[2].toIntOrNull() ?: return ""
-    if (allmonths.indexOf(parts[1]) + 1 in 1..12) month = (allmonths.indexOf(parts[1]) + 1).toString()
-    else return ""
-    if (month == parts[1]) return ""
-    return if (day !in 1..daysInMonth(month.toInt(), year)) ""
-    else "${twoDigitStr(day)}.${twoDigitStr(month.toInt())}.$year"
+    var date = str.split(" ")
+    if (date.size<3) return ""
+    val day = date[0].toIntOrNull() ?: return ""
+    val year = date[2].toIntOrNull() ?: return ""
+    var month = date[1]
+    val month2 = date[1]
+    val months1 =
+        ("января;февраля;марта;апреля;мая;июня;июля;авуста;сентября;октября;ноября;декабря")
+    val months2 = months1.split(";")
+    val numbers1 = ("01;02;03;04;05;06;07;08;09;10;11;12")
+    val numbers2 = numbers1.split(";")
+    for (i in months2.indices) {
+        if (month == months2[i]) month = numbers2[i]
+    }
+    if (month == month2) return ""
+    if (day > 31) return ""
+    if ((month == "02") && (day > 28)) return ""
+    if ((month == "02") && (day > 29) && (day % 4 == 0)) return ""
+    if (day <10) return "0$day.$month.$year"
+    return "$day.$month.$year"
 }
+
 
 /**
  * Средняя
@@ -98,22 +105,7 @@ fun dateStrToDigit(str: String): String {
  * Обратите внимание: некорректная с точки зрения календаря дата (например, 30 февраля 2009) считается неверными
  * входными данными.
  */
-fun dateDigitToStr(digital: String): String {
-    val parts = digital.split(".")
-    val allMonths = mapOf(
-        "января" to "01", "февраля" to "02",
-        "марта" to "03", "апреля" to "04", "мая" to "05", "июня" to "06", "июля" to "07", "августа" to "08",
-        "сентября" to "09", "октября" to "10", "ноября" to "11", "декабря" to "12"
-    )
-    if (parts.size != 3) return ""
-    val day = parts[0].toIntOrNull() ?: return ""
-    val year = parts[2].toIntOrNull() ?: return ""
-    var month = parts[1]
-    for ((names, dates) in allMonths) if (month == dates) month = names
-    if (month == parts[1]) return ""
-    return if (day !in 1..daysInMonth(allMonths.getOrDefault(month, "0").toInt(), year)) ""
-    else "$day $month $year"
-}
+fun dateDigitToStr(digital: String): String = TODO()
 
 
 /**
@@ -177,16 +169,8 @@ fun plusMinus(expression: String): Int = TODO()
  * Вернуть индекс начала первого повторяющегося слова, или -1, если повторов нет.
  * Пример: "Он пошёл в в школу" => результат 9 (индекс первого 'в')
  */
-fun firstDuplicateIndex(str: String): Int {
-    var ind = 0
-    val parts = str.toLowerCase().split(" ")
-    for (i in 0 until parts.size - 1) {
-        if (parts[i] == parts[i + 1]) return ind
-        ind += parts[i].length + 1
-    }
-    return -1
-}
-}
+fun firstDuplicateIndex(str: String): Int = TODO()
+
 
 /**
  * Сложная

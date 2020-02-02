@@ -119,11 +119,12 @@ fun buildSumExample(list: List<Int>) = list.joinToString(separator = " + ", post
  * Модуль пустого вектора считать равным 0.0.
  */
 fun abs(v: List<Double>): Double {
-    var number = 0.0
-    for (element in v) {
-        number += sqr(element)
+    var a = 0.0
+    for (i in v.indices) {
+        a += sqr(v[i])
     }
-    return sqrt(number)
+    a = sqrt(a)
+    return a
 }
 
 /**
@@ -132,7 +133,9 @@ fun abs(v: List<Double>): Double {
  * Рассчитать среднее арифметическое элементов списка list. Вернуть 0.0, если список пуст
  */
 fun mean(list: List<Double>): Double {
-    return if (list.isEmpty()) 0.0 else list.sum() / list.size
+    var number = 0.0
+    if (list.isNotEmpty()) number = list.sum() / list.size
+    return number
 }
 
 
@@ -145,28 +148,30 @@ fun mean(list: List<Double>): Double {
  * Обратите внимание, что данная функция должна изменять содержание списка list, а не его копии.
  */
 fun center(list: MutableList<Double>): MutableList<Double> {
-    val arithmetic = list.sum() / list.size
-    if (list.isEmpty()) return list else
-        for (i in 0 until list.size) {
-            val element = list[i]
-            list[i] = element - arithmetic
+    if (list.isNotEmpty()) {
+        val total = list.sum() / list.size
+        for (i in list.indices) {
+            list[i] -= total
         }
+    }
     return list
 }
 
 /**
- * Средняя
+ * Средня
  *
  * Найти скалярное произведение двух векторов равной размерности,
  * представленные в виде списков a и b. Скалярное произведение считать по формуле:
  * C = a1b1 + a2b2 + ... + aNbN. Произведение пустых векторов считать равным 0.
  */
 fun times(a: List<Int>, b: List<Int>): Int {
-    var result = 0
-    for (i in a.indices) {
-        result += a[i] * b[i]
+    var multiplier = 0
+    if (a.isNotEmpty() && b.isNotEmpty()) {
+        for (i in a.indices) {
+            multiplier += a[i] * b[i]
+        }
     }
-    return result
+    return multiplier
 }
 
 /**
@@ -178,13 +183,15 @@ fun times(a: List<Int>, b: List<Int>): Int {
  * Значение пустого многочлена равно 0 при любом x.
  */
 fun polynom(p: List<Int>, x: Int): Int {
-    var result = 0
-    var degree = 1
-    for (i in p.indices) {
-        result += p[i] * degree
-        degree *= x
+    var total = 0
+    var y = 1
+    if (p.isNotEmpty()) {
+        for (i in p.indices) {
+            total += p[i] * y
+            y *= x
+        }
     }
-    return result
+    return total
 }
 
 /**
@@ -198,8 +205,12 @@ fun polynom(p: List<Int>, x: Int): Int {
  * Обратите внимание, что данная функция должна изменять содержание списка list, а не его копии.
  */
 fun accumulate(list: MutableList<Int>): MutableList<Int> {
-    for (i in 1 until list.size) {
-        list[i] += list[i - 1]
+    if (list.isNotEmpty()) {
+        for (i in list.indices) {
+            if (i != 0) {
+                list[i] += list[i - 1]
+            }
+        }
     }
     return list
 }
@@ -212,22 +223,18 @@ fun accumulate(list: MutableList<Int>): MutableList<Int> {
  * Множители в списке должны располагаться по возрастанию.
  */
 fun factorize(n: Int): List<Int> {
-    var x = n
-    val result = mutableListOf<Int>()
-    while (x > 1) {
-        if (x % 2 == 0) {
-            result.add(2)
-            x /= 2
-            continue
+    var number = n
+    var list = mutableListOf<Int>()
+    var digit = 2
+    while (number > 1) {
+        while (number % digit == 0) {
+            number /= digit
+            list.add(digit)
         }
-        var y = 3
-        while (x % y != 0) {
-            y += 2
-        }
-        result.add(y)
-        x /= y
+        digit++
     }
-    return result
+    list.sorted()
+    return list
 }
 
 /**
@@ -247,14 +254,17 @@ fun factorizeToString(n: Int): String = factorize(n).joinToString(separator = "*
  * например: n = 100, base = 4 -> (1, 2, 1, 0) или n = 250, base = 14 -> (1, 3, 12)
  */
 fun convert(n: Int, base: Int): List<Int> {
-    var x = n
-    var result = mutableListOf<Int>()
-    while (x >= base) {
-        result.add(0, x % base)
-        x /= base
+    var remain = 0
+    var list = mutableListOf<Int>()
+    var number = n
+    while (number > base) {
+        remain = number % base
+        number /= base
+        list.add(remain)
     }
-    result.add(0, x)
-    return result
+    list.add(number)
+    list.reverse()
+    return list
 }
 
 /**
@@ -269,7 +279,28 @@ fun convert(n: Int, base: Int): List<Int> {
  * (например, n.toString(base) и подобные), запрещается.
  */
 fun convertToString(n: Int, base: Int): String {
-    return convert(n, base).joinToString(separator = "") { if (it < 10) "$it" else (it + 87).toChar().toString() }
+    val letters = mutableListOf(
+        "a", "b", "c", "d", "e", "f", "g", "h", "i", "j",
+        "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"
+    )
+    val numbers = mutableListOf(
+        10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
+        20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35
+    )
+    var a = 0
+    var b = ""
+    var result = convert(n, base)
+    var total = mutableListOf<String>()
+    for (i in result.indices) {
+        if (result[i] > 9) {
+            a = result[i]
+            for (i in letters.indices) {
+                if (a == numbers[i]) b = letters[i]
+            }
+            total.add(b)
+        } else total.add(result[i].toString())
+    }
+    return total.joinToString(separator = "")
 }
 
 /**
@@ -280,12 +311,18 @@ fun convertToString(n: Int, base: Int): String {
  * Например: digits = (1, 3, 12), base = 14 -> 250
  */
 fun decimal(digits: List<Int>, base: Int): Int {
-    var result = 0
-    val x = digits.size - 1
+    var number = 0.0
+    var b = base.toDouble()
+    var total1 = 0.0
+    var total2 = 0
+    var degree = digits.size - 1
     for (i in digits.indices) {
-        result += digits[i] * base.toDouble().pow(x - i).toInt()
+        number = digits[i].toDouble()
+        total1 += b.pow(degree) * number
+        degree -= 1
     }
-    return result
+    total2 = total1.toInt()
+    return total2
 }
 
 /**
@@ -300,7 +337,37 @@ fun decimal(digits: List<Int>, base: Int): Int {
  * Использовать функции стандартной библиотеки, напрямую и полностью решающие данную задачу
  * (например, str.toInt(base)), запрещается.
  */
-fun decimalFromString(str: String, base: Int): Int = TODO()
+fun decimalFromString(str: String, base: Int): Int {
+    val letters = mutableListOf(
+        "a", "b", "c", "d", "e", "f", "g", "h", "i", "j",
+        "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"
+    )
+    val numbers = mutableListOf(
+        10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
+        20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35
+    )
+    val digits = mutableListOf(
+        0, 1, 2, 3, 4, 5, 6, 7, 8, 9
+    )
+    var result = str.toMutableList()
+    var total = mutableListOf<Int>()
+    var a = ""
+    var b = 0
+    for (i in result.indices) {
+        a = result[i].toString()
+        for (i in letters.indices) {
+            if (a == letters[i]) total.add(numbers[i])
+        }
+        if (total.size != i) {
+            b = result[i].toInt()
+            for (i in digits.indices) {
+                if (b == digits[i]) total.add(digits[i])
+            }
+        }
+    }
+    println(b)
+    return decimal(total, base)
+}
 
 /**
  * Сложная
@@ -310,7 +377,63 @@ fun decimalFromString(str: String, base: Int): Int = TODO()
  * 90 = XC, 100 = C, 400 = CD, 500 = D, 900 = CM, 1000 = M.
  * Например: 23 = XXIII, 44 = XLIV, 100 = C
  */
-fun roman(n: Int): String = TODO()
+fun roman(n: Int): String {
+    var number = n
+    var result = ""
+    while (number >= 1000) {
+        result += "M"
+        number -= 1000
+    }
+    while (number >= 900) {
+        result += "CM"
+        number -= 900
+    }
+    while (number >= 500) {
+        result += "D"
+        number -= 500
+    }
+    while (number >= 400) {
+        result += "CD"
+        number -= 400
+    }
+    while (number >= 100) {
+        result += "C"
+        number -= 100
+    }
+    while (number >= 90) {
+        result += "XC"
+        number -= 90
+    }
+    while (number >= 50) {
+        result += "L"
+        number -= 50
+    }
+    while (number >= 40) {
+        result += "XL"
+        number -= 40
+    }
+    while (number >= 10) {
+        result += "X"
+        number -= 10
+    }
+    while (number >= 9) {
+        result += "IX"
+        number -= 9
+    }
+    while (number >= 5) {
+        result += "V"
+        number -= 5
+    }
+    while (number >= 4) {
+        result += "IV"
+        number -= 4
+    }
+    while (number >= 1) {
+        result += "I"
+        number -= 1
+    }
+    return result
+}
 
 /**
  * Очень сложная
