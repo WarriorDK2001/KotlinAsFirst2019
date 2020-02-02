@@ -79,7 +79,7 @@ fun dateStrToDigit(str: String): String {
     var month = date[1]
     val month2 = date[1]
     val months1 =
-        ("января;февраля;марта;апреля;мая;июня;июля;авуста;сентября;октября;ноября;декабря")
+        ("января;февраля;марта;апреля;мая;июня;июля;августа;сентября;октября;ноября;декабря")
     val months2 = months1.split(";")
     val numbers1 = ("01;02;03;04;05;06;07;08;09;10;11;12")
     val numbers2 = numbers1.split(";")
