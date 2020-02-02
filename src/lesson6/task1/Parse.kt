@@ -75,7 +75,7 @@ fun dateStrToDigit(str: String): String {
     var date = str.split(" ")
     if (date.size<3) return ""
     val day = date[0].toIntOrNull() ?: return ""
-    val year = date[2]
+    val year = date[2].toIntOrNull() ?: return ""
     var month = date[1]
     val month2 = date[1]
     val months1 =
