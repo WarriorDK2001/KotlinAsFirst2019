@@ -95,7 +95,6 @@ fun buildWordSet(text: List<String>): MutableSet<String> {
  */
 fun buildGrades(grades: Map<String, Int>): Map<Int, List<String>> = TODO()
 
-
 /**
  * Простая
  *
@@ -183,7 +182,6 @@ fun mergePhoneBooks(mapA: Map<String, String>, mapB: Map<String, String>): Map<S
  */
 fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Double> = TODO()
 
-
 /**
  * Средняя
  *
@@ -206,7 +204,7 @@ fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): S
     result = null
     for ((key, value) in stuff) {
         if (value.first == kind) {
-            if (value.second < cost) {
+            if (value.second <= cost) {
                 cost = value.second
                 result = key
             }
@@ -225,7 +223,20 @@ fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): S
  * Например:
  *   canBuildFrom(listOf('a', 'b', 'o'), "baobab") -> true
  */
-fun canBuildFrom(chars: List<Char>, word: String): Boolean = TODO()
+fun canBuildFrom(chars: List<Char>, word: String): Boolean {
+    val list = word.split("").toMutableList()
+    for (i in list.indices) {
+        list.remove("")
+    }
+    var count = list.size
+    for (i in list.indices) {
+        for (m in chars.indices) {
+            if (chars[m].toString() == list[i]) count--
+        }
+    }
+    if (count == 0) return true
+    return false
+}
 
 /**
  * Средняя
@@ -241,7 +252,6 @@ fun canBuildFrom(chars: List<Char>, word: String): Boolean = TODO()
  */
 fun extractRepeats(list: List<String>): Map<String, Int> = TODO()
 
-
 /**
  * Средняя
  *
@@ -251,7 +261,20 @@ fun extractRepeats(list: List<String>): Map<String, Int> = TODO()
  * Например:
  *   hasAnagrams(listOf("тор", "свет", "рот")) -> true
  */
-fun hasAnagrams(words: List<String>): Boolean = TODO()
+fun hasAnagrams(words: List<String>): Boolean {
+    var list = mutableListOf<String>()
+    var map1 = mutableMapOf<String, Int>()
+    var map2 = mutableMapOf<String, Int>()
+    for (i in words.indices) {
+        list = words[i].split("").toMutableList()
+        for (n in list.indices) {
+            for ((key, value) in map1){
+                map1[list[i]]=0
+            }
+        }
+    }
+return false
+}
 
 /**
  * Сложная
@@ -296,9 +319,17 @@ fun propagateHandshakes(friends: Map<String, Set<String>>): Map<String, Set<Stri
  *   findSumOfTwo(listOf(1, 2, 3), 4) -> Pair(0, 2)
  *   findSumOfTwo(listOf(1, 2, 3), 6) -> Pair(-1, -1)
  */
-fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> = TODO()
-
-
+fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
+    var total=Pair(-1,-1)
+    var count=0
+    for (i in list.indices){
+        for (j in list.indices){
+            if (i==j) break
+            if(list[i]+list[j]==number) return Pair(j,i)
+        }
+    }
+    return total
+}
 /**
  * Очень сложная
  *

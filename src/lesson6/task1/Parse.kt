@@ -73,7 +73,7 @@ fun main() {
  */
 fun dateStrToDigit(str: String): String {
     var date = str.split(" ")
-    if (date.size<3) return ""
+    if (date.size < 3) return ""
     val day = date[0].toIntOrNull() ?: return ""
     val year = date[2].toIntOrNull() ?: return ""
     var month = date[1]
@@ -88,9 +88,8 @@ fun dateStrToDigit(str: String): String {
     }
     if (month == month2) return ""
     if (day > 31) return ""
-    if ((month == "02") && (day > 28)) return ""
-    if ((month == "02") && (day > 29) && (day % 4 == 0)) return ""
-    if (day <10) return "0$day.$month.$year"
+    if (daysInMonth(month.toInt(), year) < day) return ""
+    if (day < 10) return "0$day.$month.$year"
     return "$day.$month.$year"
 }
 
