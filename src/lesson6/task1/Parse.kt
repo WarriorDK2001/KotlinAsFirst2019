@@ -121,8 +121,40 @@ fun dateDigitToStr(digital: String): String = TODO()
  *
  * PS: Дополнительные примеры работы функции можно посмотреть в соответствующих тестах.
  */
-fun flattenPhoneNumber(phone: String): String = TODO()
+fun flattenPhoneNumber(phone: String): String {
+    var count = 0
+    var lettersMas = phone.trim().toCharArray()
+    var result = StringBuilder()
+    var numbers = ("0123456789()-+ ")
+    for (i in lettersMas.indices) {
+        if (!numbers.contains(lettersMas[i])) {
+            return ""
+        } else {
+            if ((lettersMas[i] != ' ') && (lettersMas[i] != '-')) {
+                if ((lettersMas[i] == '+') && (i != 0))
+                    return ""
+                else
+                    result.append(lettersMas[i])
 
+            }
+        }
+
+    }
+    if (result.contains("()") || result.contains(")("))
+        return ""
+    else {
+        var numbers: ArrayList<Int> = arrayListOf()
+        for (i in result.indices) {
+            if ((result[i] == '(') || (result[i] == ')'))
+                numbers.add(i)
+        }
+        for (i in numbers.indices) {
+            result = result.deleteCharAt(numbers[i] - count)
+            count++
+        }
+        return result.toString()
+    }
+}
 /**
  * Средняя
  *

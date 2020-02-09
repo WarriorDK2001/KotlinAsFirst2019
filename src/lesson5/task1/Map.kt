@@ -110,6 +110,7 @@ fun containsIn(a: Map<String, String>, b: Map<String, String>): Boolean {
     var total2 = b.toMutableMap()
     total1.putAll(b)
     total2.putAll(a)
+    if (a.isEmpty()||b.isEmpty()) return false
     if (total1 == total2) return true
     return false
 }
@@ -133,8 +134,6 @@ fun subtractOf(a: MutableMap<String, String>, b: Map<String, String>): Unit {
         if ((a[key] == b[key]) && (a[value] == b[value])) a.remove(key)
     }
 }
-
-
 /**
  * Простая
  *
@@ -231,7 +230,9 @@ fun canBuildFrom(chars: List<Char>, word: String): Boolean {
     var count = list.size
     for (i in list.indices) {
         for (m in chars.indices) {
-            if (chars[m].toString() == list[i]) count--
+            if ((chars[m].toString() == list[i]) || (chars[m].toString().toUpperCase() == list[i])
+                || (chars[m].toString().toLowerCase() == list[i])
+            ) count--
         }
     }
     if (count == 0) return true
@@ -263,17 +264,19 @@ fun extractRepeats(list: List<String>): Map<String, Int> = TODO()
  */
 fun hasAnagrams(words: List<String>): Boolean {
     var list = mutableListOf<String>()
-    var map1 = mutableMapOf<String, Int>()
-    var map2 = mutableMapOf<String, Int>()
+    var set1 = mutableSetOf<String>()
+    var set2 = mutableSetOf<String>()
     for (i in words.indices) {
         list = words[i].split("").toMutableList()
-        for (n in list.indices) {
-            for ((key, value) in map1){
-                map1[list[i]]=0
-            }
+        set1.addAll(list)
+        for (j in words.indices) {
+            if (i == j) break
+            list = words[j].split("").toMutableList()
+            set2.addAll(list)
+            if (set1 == set2) return true
         }
     }
-return false
+    return false
 }
 
 /**
@@ -320,16 +323,17 @@ fun propagateHandshakes(friends: Map<String, Set<String>>): Map<String, Set<Stri
  *   findSumOfTwo(listOf(1, 2, 3), 6) -> Pair(-1, -1)
  */
 fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
-    var total=Pair(-1,-1)
-    var count=0
-    for (i in list.indices){
-        for (j in list.indices){
-            if (i==j) break
-            if(list[i]+list[j]==number) return Pair(j,i)
+    var total = Pair(-1, -1)
+    var count = 0
+    for (i in list.indices) {
+        for (j in list.indices) {
+            if (i == j) break
+            if (list[i] + list[j] == number) return Pair(j, i)
         }
     }
     return total
 }
+
 /**
  * Очень сложная
  *
