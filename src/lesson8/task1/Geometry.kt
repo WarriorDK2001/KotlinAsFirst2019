@@ -7,6 +7,7 @@ import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.sin
 import kotlin.math.sqrt
+import java.lang.IllegalArgumentException
 
 /**
  * Точка на плоскости
@@ -79,14 +80,22 @@ data class Circle(val center: Point, val radius: Double) {
      * расстояние между их центрами минус сумма их радиусов.
      * Расстояние между пересекающимися окружностями считать равным 0.0.
      */
-    fun distance(other: Circle): Double = TODO()
+    fun distance(other: Circle): Double {
+        val centerdis = sqrt(sqr(center.x - other.center.x) + sqr(center.y - other.center.y))
+        val circlesdis = centerdis - (radius + other.radius)
+        if (circlesdis >= 0) return circlesdis
+        return 0.0
+    }
 
     /**
      * Тривиальная
      *
      * Вернуть true, если и только если окружность содержит данную точку НА себе или ВНУТРИ себя
      */
-    fun contains(p: Point): Boolean = TODO()
+    fun contains(p: Point): Boolean {
+        if (sqr(center.x - p.x) + sqr(center.y - p.y) <= sqr(radius)) return true
+        return false
+    }
 }
 
 /**
@@ -106,7 +115,22 @@ data class Segment(val begin: Point, val end: Point) {
  * Дано множество точек. Вернуть отрезок, соединяющий две наиболее удалённые из них.
  * Если в множестве менее двух точек, бросить IllegalArgumentException
  */
-fun diameter(vararg points: Point): Segment = TODO()
+fun diameter(vararg points: Point): Segment {
+    var length = 0
+    var point1 =Point(0.0,0.0)
+    var point2 =Point(0.0,0.0)
+    if (points.size < 2) throw IllegalArgumentException()
+    for (i in points.indices) {
+        for (j in points.indices) {
+            if (i == j) break
+            if (sqrt(sqr(points[i].x - points[j].x) + sqr(points[i].y - points[j].y)) > length) {
+                point1 = points[i]
+                point2 = points[j]
+            }
+        }
+    }
+    return Segment(point1, point2)
+}
 
 /**
  * Простая
@@ -114,7 +138,11 @@ fun diameter(vararg points: Point): Segment = TODO()
  * Построить окружность по её диаметру, заданному двумя точками
  * Центр её должен находиться посередине между точками, а радиус составлять половину расстояния между ними
  */
-fun circleByDiameter(diameter: Segment): Circle = TODO()
+fun circleByDiameter(diameter: Segment): Circle {
+    val center = Point((diameter.begin.x + diameter.end.x) / 2, (diameter.begin.y + diameter.end.y) / 2)
+    val radius = sqrt(sqr(diameter.begin.x - diameter.end.x) + sqr(diameter.begin.y - diameter.end.y))
+    return Circle(center, radius / 2)
+}
 
 /**
  * Прямая, заданная точкой point и углом наклона angle (в радианах) по отношению к оси X.

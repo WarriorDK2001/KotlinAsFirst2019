@@ -3,6 +3,7 @@
 package lesson6.task1
 
 import lesson2.task2.daysInMonth
+import java.lang.IllegalArgumentException
 
 /**
  * Пример
@@ -140,8 +141,8 @@ fun flattenPhoneNumber(phone: String): String {
         }
 
     }
-    if (result.contains("()") || result.contains(")("))
-        return ""
+    return if (result.contains("()") || result.contains(")("))
+        ""
     else {
         var numbers: ArrayList<Int> = arrayListOf()
         for (i in result.indices) {
@@ -152,9 +153,10 @@ fun flattenPhoneNumber(phone: String): String {
             result = result.deleteCharAt(numbers[i] - count)
             count++
         }
-        return result.toString()
+        result.toString()
     }
 }
+
 /**
  * Средняя
  *
@@ -189,7 +191,31 @@ fun bestHighJump(jumps: String): Int = TODO()
  * Вернуть значение выражения (6 для примера).
  * Про нарушении формата входной строки бросить исключение IllegalArgumentException
  */
-fun plusMinus(expression: String): Int = TODO()
+fun plusMinus(expression: String): Int {
+    var numbers = ("0123456789-+ ")
+    var total = 0
+    var list = expression.trim().split(" ")
+    var check = expression.trim().split("")
+    print(check)
+    for (j in check.indices) {
+        if ((check[j] == "+") || (check[j] == "-")) {
+            if (check[j + 1] != " ") throw IllegalArgumentException()
+        }
+    }
+        for (i in list.indices) {
+            println(list[i])
+            if ((list[i] == "+") || (list[i] == "-")) {
+                if ((list[i + 1] == "+") || (list[i + 1] == "-") || (i == 0)) throw IllegalArgumentException()
+                else {
+                    if (list[i] == "+") total += list[i + 1].toInt()
+                    if (list[i] == "-") total -= list[i + 1].toInt()
+                }
+            }
+            else if (i == 0) total += list[i].toInt()
+        }
+        println(list)
+    return total
+}
 
 /**
  * Сложная
@@ -200,7 +226,39 @@ fun plusMinus(expression: String): Int = TODO()
  * Вернуть индекс начала первого повторяющегося слова, или -1, если повторов нет.
  * Пример: "Он пошёл в в школу" => результат 9 (индекс первого 'в')
  */
-fun firstDuplicateIndex(str: String): Int = TODO()
+fun firstDuplicateIndex(str: String): Int {
+    var list = mutableListOf<String>()
+    var words = str.trim().split(" ")
+    var total = mutableListOf<String>()
+    var index = -1
+    if (words.size == 1) return -1
+    for (i in words.indices) {
+        if (i != 0) {
+            total.add(" ")
+            total.add(words[i])
+        } else total.add(words[i])
+    }
+    for (i in total.indices) {
+        list = total[i].trim().split("").toMutableList()
+        println(total[i].trim().split(""))
+        println(total[i].trim().split("").size)
+        index += list.size - 2
+        if (total[i] != " ") {
+            for (j in total.indices) {
+                if (j > i + 2) break
+                if ((i + 2 == j) && (total[i].toLowerCase() == total[j].toLowerCase())) {
+                    var count = list.size - 2
+                    while (count != 1) {
+                        count--
+                        index--
+                    }
+                    return index
+                }
+            }
+        } else index++
+    }
+    return -1
+}
 
 
 /**
