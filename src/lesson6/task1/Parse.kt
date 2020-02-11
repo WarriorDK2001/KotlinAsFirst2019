@@ -4,6 +4,7 @@ package lesson6.task1
 
 import lesson2.task2.daysInMonth
 import java.lang.IllegalArgumentException
+import kotlin.math.exp
 
 /**
  * Пример
@@ -192,7 +193,10 @@ fun bestHighJump(jumps: String): Int = TODO()
  * Про нарушении формата входной строки бросить исключение IllegalArgumentException
  */
 fun plusMinus(expression: String): Int {
-    if (expression==null) throw IllegalArgumentException()
+    if (expression == "") throw IllegalArgumentException()
+    var lcheck = expression.split(" ").toMutableList()
+    for (i in lcheck.indices) lcheck.remove(" ")
+    if (lcheck.size == 2) throw IllegalArgumentException()
     var numbers = ("0123456789-+ ")
     for (i in expression.indices) {
         if (!numbers.contains(expression[i])) throw IllegalArgumentException()
