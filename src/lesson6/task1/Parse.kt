@@ -192,7 +192,6 @@ fun bestHighJump(jumps: String): Int = TODO()
  * Про нарушении формата входной строки бросить исключение IllegalArgumentException
  */
 fun plusMinus(expression: String): Int {
-    if (expression.split("").size<=1) throw IllegalArgumentException()
     var numbers = ("0123456789-+ ")
     for (i in expression.indices) {
         if (!numbers.contains(expression[i])) throw IllegalArgumentException()
@@ -214,6 +213,7 @@ fun plusMinus(expression: String): Int {
             }
         } else if (i == 0) total += list[i].toInt()
     }
+    if (total==null) throw IllegalArgumentException()
     return total
 }
 
