@@ -124,6 +124,7 @@ fun diameter(vararg points: Point): Segment {
         for (j in points.indices) {
             if (i == j) break
             if (sqrt(sqr(points[i].x - points[j].x) + sqr(points[i].y - points[j].y)) > length) {
+                length=sqrt(sqr(points[i].x - points[j].x) + sqr(points[i].y - points[j].y)).toInt()
                 point1 = points[i]
                 point2 = points[j]
             }
