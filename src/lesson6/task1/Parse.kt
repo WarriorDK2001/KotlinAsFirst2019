@@ -192,29 +192,27 @@ fun bestHighJump(jumps: String): Int = TODO()
  * Про нарушении формата входной строки бросить исключение IllegalArgumentException
  */
 fun plusMinus(expression: String): Int {
-    if (expression =="") throw IllegalArgumentException()
     var numbers = ("0123456789-+ ")
+    for (i in expression.indices) {
+        if (!numbers.contains(expression[i])) throw IllegalArgumentException()
+    }
     var total = 0
     var list = expression.trim().split(" ")
     var check = expression.trim().split("")
-    print(check)
     for (j in check.indices) {
         if ((check[j] == "+") || (check[j] == "-")) {
             if (check[j + 1] != " ") throw IllegalArgumentException()
         }
     }
-        for (i in list.indices) {
-            println(list[i])
-            if ((list[i] == "+") || (list[i] == "-")) {
-                if ((list[i + 1] == "+") || (list[i + 1] == "-") || (i == 0)) throw IllegalArgumentException()
-                else {
-                    if (list[i] == "+") total += list[i + 1].toInt()
-                    if (list[i] == "-") total -= list[i + 1].toInt()
-                }
+    for (i in list.indices) {
+        if ((list[i] == "+") || (list[i] == "-")) {
+            if ((list[i + 1] == "+") || (list[i + 1] == "-") || (i == 0)) throw IllegalArgumentException()
+            else {
+                if (list[i] == "+") total += list[i + 1].toInt()
+                if (list[i] == "-") total -= list[i + 1].toInt()
             }
-            else if (i == 0) total += list[i].toInt()
-        }
-        println(list)
+        } else if (i == 0) total += list[i].toInt()
+    }
     return total
 }
 
