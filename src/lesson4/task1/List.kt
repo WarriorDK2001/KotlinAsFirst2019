@@ -4,6 +4,7 @@ package lesson4.task1
 
 import lesson1.task1.discriminant
 import lesson1.task1.sqr
+import lesson3.task1.digitNumber
 import java.io.File.separator
 import kotlin.math.pow
 import kotlin.math.sqrt
@@ -442,4 +443,109 @@ fun roman(n: Int): String {
  * Например, 375 = "триста семьдесят пять",
  * 23964 = "двадцать три тысячи девятьсот шестьдесят четыре"
  */
-fun russian(n: Int): String = TODO()
+fun russian(n: Int): String {
+    var count = 0
+    var number = n.toString().trim().split("").toMutableList()
+    var numbers1 = listOf(
+        "", "один", "два", "три", "четыре", "пять", "шесть", "семь"
+        , "восемь", "девять"
+    )
+    var numbers5 = listOf(
+        "", "десять", "одинадцать", "двенадцать", "тринадцать",
+        "четырнадцать", "пятнадцать", "шестнадцать", "семнадцать", "восемнадцать", "девятнадцать"
+    )
+    var numbers2 = listOf(
+        "", "двадцать", "тридцать", "сорок", "пятьдесят", "шестьдесят", "семьдесят", "восемьдесят",
+        "девяносто"
+    )
+    var numbers3 =
+        listOf("", "сто", "двести", "триста", "четыреста", "пятьсот", "шестьсот", "семьсот", "восемьсот", "девятьсот")
+    var numbers4 = listOf(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
+    var total = ""
+    if (digitNumber(n) > 3) {
+        if (digitNumber(n) == 6)
+            for (j in numbers4) {
+                if (number[0].toInt() == numbers4[j]) count = j
+            }
+        for (i in numbers3.indices) {
+            if (count == i) {
+                total += " "
+                total += numbers3[i]
+                number.remove(number[0])
+            }
+        }
+        if ((digitNumber(n) == 5) && (number[0].toInt() != 0)&& (number[0].toInt() != 1)) {
+            if (number[0].toInt() == 0)
+                for (j in numbers4) {
+                    if (number[0].toInt() == numbers4[j]) count = j
+                }
+            for (i in numbers2.indices) {
+                if (count == i) {
+                    total += " "
+                    total += numbers2[i]
+                    number.remove(number[0])
+                }
+            }
+        }
+        if(number[0].toInt() == 0) number.remove(number[0])
+        if(number[0].toInt() == 1){
+            for (i in numbers3.indices) {
+                if (count == i) {
+                    total += " "
+                    total += numbers3[i]
+                    number.remove(number[0])
+                }
+            }
+        }
+        if (digitNumber(n) == 4) {
+            for (j in numbers4) {
+                if (number[0].toInt() == numbers4[j]) count = j
+            }
+            for (i in numbers1.indices) {
+                if (count == i) {
+                    total += " "
+                    total += numbers1[i]
+                }
+            }
+        }
+        if (number[2].toInt() == 1) total += " тысяча "
+        total += if ((number[0].toInt() == 2) || (number[0].toInt() == 3) || (number[0].toInt() == 4)) " тысячи "
+        else " тысяч "
+        number.remove(number[0])
+    } else number.remove(number[0])
+    if (digitNumber(n) == 3)
+        for (j in numbers4) {
+            if (number[0].toInt() == numbers4[j]) count = j
+        }
+    for (i in numbers3.indices) {
+        if (count == i) {
+            total += " "
+            total += numbers3[i]
+            number.remove(number[0])
+        }
+    }
+    if ((digitNumber(n) == 2) && (number[0].toInt() != 0)&& (number[0].toInt() != 1)) {
+        for (j in numbers4) {
+            if (number[0].toInt() == numbers4[j]) count = j
+        }
+        for (i in numbers2.indices) {
+            if (count == i) {
+                total += " "
+                total += numbers2[i]
+                number.remove(number[0])
+            }
+        }
+    }
+    if (digitNumber(n) == 1) {
+        for (j in numbers4) {
+            if (number[1].toInt() == numbers4[j]) count = j
+        }
+        for (i in numbers1.indices) {
+            if (count == i) {
+                total += " "
+                total += numbers1[i]
+            }
+        }
+    }
+    return total.trim()
+}

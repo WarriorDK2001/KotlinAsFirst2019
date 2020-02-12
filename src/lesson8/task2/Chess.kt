@@ -22,7 +22,19 @@ data class Square(val column: Int, val row: Int) {
      * В нотации, колонки обозначаются латинскими буквами от a до h, а ряды -- цифрами от 1 до 8.
      * Для клетки не в пределах доски вернуть пустую строку
      */
-    fun notation(): String = TODO()
+    fun notation(): String {
+        if ((column == 0) || (row == 0)) return ""
+        var word = (" a b c d e f g h").split(" ")
+        println(word)
+        var total = ""
+        for (i in word.indices) {
+            if ((column == i) && (i != 0)) {
+                total = word[i]
+                return "$total$row"
+            }
+        }
+        return ""
+    }
 }
 
 /**

@@ -8,6 +8,7 @@ import kotlin.math.cos
 import kotlin.math.sin
 import kotlin.math.sqrt
 import java.lang.IllegalArgumentException
+import kotlin.Double.Companion.MAX_VALUE
 
 /**
  * Точка на плоскости
@@ -117,14 +118,14 @@ data class Segment(val begin: Point, val end: Point) {
  */
 fun diameter(vararg points: Point): Segment {
     var length = 0.0
-    var point1 =Point(0.0,0.0)
-    var point2 =Point(0.0,0.0)
+    var point1 = Point(0.0, 0.0)
+    var point2 = Point(0.0, 0.0)
     if (points.size < 2) throw IllegalArgumentException()
     for (i in points.indices) {
         for (j in points.indices) {
             if (i == j) break
             if (sqrt(sqr(points[i].x - points[j].x) + sqr(points[i].y - points[j].y)) > length) {
-                length=sqrt(sqr(points[i].x - points[j].x) + sqr(points[i].y - points[j].y))
+                length = sqrt(sqr(points[i].x - points[j].x) + sqr(points[i].y - points[j].y))
                 point1 = points[i]
                 point2 = points[j]
             }
@@ -204,7 +205,22 @@ fun bisectorByPoints(a: Point, b: Point): Line = TODO()
  * Задан список из n окружностей на плоскости. Найти пару наименее удалённых из них.
  * Если в списке менее двух окружностей, бросить IllegalArgumentException
  */
-fun findNearestCirclePair(vararg circles: Circle): Pair<Circle, Circle> = TODO()
+
+fun findNearestCirclePair(vararg circles: Circle): Pair<Circle, Circle> {
+    if (circles.size < 2) throw IllegalArgumentException()
+    var result = Pair(Circle(Point(0.0, 0.0), 0.0), Circle(Point(0.0, 0.0), 0.0))
+    var dist = MAX_VALUE
+    for (i in circles.indices) {
+        for (j in circles.indices) {
+            if (i == j) break
+            if (dist > circles[i].distance(circles[j])) {
+                dist = circles[i].distance(circles[j])
+                result = Pair(circles[j], circles[i])
+            }
+        }
+    }
+    return result
+}
 
 /**
  * Сложная
