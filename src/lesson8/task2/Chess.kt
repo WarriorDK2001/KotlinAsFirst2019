@@ -1,7 +1,10 @@
 @file:Suppress("UNUSED_PARAMETER")
 
 package lesson8.task2
+
 import java.lang.IllegalArgumentException
+import kotlin.math.abs
+
 /**
  * Клетка шахматной доски. Шахматная доска квадратная и имеет 8 х 8 клеток.
  * Поэтому, обе координаты клетки (горизонталь row, вертикаль column) могут находиться в пределах от 1 до 8.
@@ -23,7 +26,7 @@ data class Square(val column: Int, val row: Int) {
      * Для клетки не в пределах доски вернуть пустую строку
      */
     fun notation(): String {
-        if ((column <= 0) || (row <= 0)||(column >8) || (row > 8)) return ""
+        if ((column <= 0) || (row <= 0) || (column > 8) || (row > 8)) return ""
         var word = (" a b c d e f g h").split(" ")
         var total = ""
         for (i in word.indices) {
@@ -44,11 +47,18 @@ data class Square(val column: Int, val row: Int) {
  * Если нотация некорректна, бросить IllegalArgumentException
  */
 fun square(notation: String): Square {
-    if (notation.length<2) throw IllegalArgumentException()
+    var count = 0
+    if (notation.length < 2) throw IllegalArgumentException()
     var not = notation.trim().split("")
     var word = listOf("a", "b", "c", "d", "e", "f", "g", "h")
     for (i in word.indices) {
         if (not[2].contains(word[i])) throw IllegalArgumentException()
+    }
+    for (i in word.indices) {
+        if (!not[1].contains(word[i])) {
+            count++
+            if (count == 8) throw IllegalArgumentException()
+        }
     }
     var number = listOf(1, 2, 3, 4, 5, 6, 7, 8)
     var column = 0
@@ -85,9 +95,7 @@ fun square(notation: String): Square {
  * Ладья может пройти через клетку (3, 3) или через клетку (6, 1) к клетке (6, 3).
  */
 fun rookMoveNumber(start: Square, end: Square): Int {
-    print(end)
-    print(start)
-    if ((start.row>8)||(start.row<=0)||(end.column>8)||(end.column<=0)) throw IllegalArgumentException()
+    if ((start.row > 8) || (start.row <= 0) || (end.column > 8) || (end.column <= 0)) throw IllegalArgumentException()
     var count = 0
     if (start.row != end.row) count++
     if (start.column != end.column) count++
@@ -175,7 +183,28 @@ fun bishopTrajectory(start: Square, end: Square): List<Square> = TODO()
  * Пример: kingMoveNumber(Square(3, 1), Square(6, 3)) = 3.
  * Король может последовательно пройти через клетки (4, 2) и (5, 2) к клетке (6, 3).
  */
-fun kingMoveNumber(start: Square, end: Square): Int = TODO()
+fun kingMoveNumber(start: Square, end: Square): Int {
+    if ((start.row > 8) || (start.column > 8) || (start.row <= 0) || (start.column <= 0)
+        || (end.row > 8) || (end.column > 8) || (end.row <= 0) || (end.column <= 0)
+    ) throw IllegalArgumentException()
+    var count = 0
+    var rowdifference = abs(start.row - end.row)
+    var columndifference = abs(start.column - end.column)
+    while ((rowdifference != 0) && (columndifference != 0)) {
+        rowdifference--
+        columndifference--
+        count++
+    }
+    while (rowdifference != 0) {
+        rowdifference--
+        count++
+    }
+    while (columndifference != 0) {
+        columndifference--
+        count++
+    }
+    return count
+}
 
 /**
  * Сложная

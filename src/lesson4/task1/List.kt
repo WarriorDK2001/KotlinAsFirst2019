@@ -488,8 +488,8 @@ fun russian(n: Int): String {
                 if (count == i) {
                     total += " "
                     print(numbers2[i])
-                    if (numbers2[i] =="два") total += "две"
-                    else total += numbers2[i]
+                    total += if (numbers2[i] =="два") "две"
+                    else numbers2[i]
                     number.remove(number[0])
                     digit--
                 }
