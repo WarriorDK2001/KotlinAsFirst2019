@@ -447,7 +447,7 @@ fun russian(n: Int): String {
     var digit = digitNumber(n)
     var count = 0
     var number = n.toString().trim().split("").toMutableList()
-    if (number[0]=="")number.remove(number[0])
+    if (number[0] == "") number.remove(number[0])
     var numbers1 = listOf(
         "", "один", "два", "три", "четыре", "пять", "шесть", "семь"
         , "восемь", "девять"
@@ -480,13 +480,15 @@ fun russian(n: Int): String {
         }
         println(number)
         if ((digit == 5) && (number[0].toInt() != 0) && (number[0].toInt() != 1)) {
-                for (j in numbers4) {
-                    if (number[0].toInt() == numbers4[j]) count = j
-                }
+            for (j in numbers4) {
+                if (number[0].toInt() == numbers4[j]) count = j
+            }
             for (i in numbers2.indices) {
                 if (count == i) {
                     total += " "
-                    total += numbers2[i]
+                    print(numbers2[i])
+                    if (numbers2[i] =="два") total += "две"
+                    else total += numbers2[i]
                     number.remove(number[0])
                     digit--
                 }
@@ -550,8 +552,7 @@ fun russian(n: Int): String {
                 digit--
             }
         }
-    }
-    else {
+    } else {
         if (number[0].toInt() == 0) {
             number.remove(number[0])
             digit--
