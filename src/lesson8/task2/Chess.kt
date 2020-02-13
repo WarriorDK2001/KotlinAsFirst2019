@@ -25,7 +25,6 @@ data class Square(val column: Int, val row: Int) {
     fun notation(): String {
         if ((column == 0) || (row == 0)) return ""
         var word = (" a b c d e f g h").split(" ")
-        println(word)
         var total = ""
         for (i in word.indices) {
             if ((column == i) && (i != 0)) {
@@ -44,7 +43,18 @@ data class Square(val column: Int, val row: Int) {
  * В нотации, колонки обозначаются латинскими буквами от a до h, а ряды -- цифрами от 1 до 8.
  * Если нотация некорректна, бросить IllegalArgumentException
  */
-fun square(notation: String): Square = TODO()
+fun square(notation: String): Square {
+    var not = notation.trim().split("")
+    var word = listOf("a", "b", "c" ,"d" ,"e" ,"f" ,"g" ,"h")
+    var number = listOf(1,2,3,4,5,6,7,8)
+    var column =0
+    for (i in word.indices){
+        if (word[i]==not[1]) {
+            column = number[i]}
+    }
+    val row = not[2]
+    return Square(column,row.toInt())
+}
 
 /**
  * Простая
@@ -69,7 +79,14 @@ fun square(notation: String): Square = TODO()
  * Пример: rookMoveNumber(Square(3, 1), Square(6, 3)) = 2
  * Ладья может пройти через клетку (3, 3) или через клетку (6, 1) к клетке (6, 3).
  */
-fun rookMoveNumber(start: Square, end: Square): Int = TODO()
+fun rookMoveNumber(start: Square, end: Square): Int  {
+    print(end)
+    print(start)
+    var count = 0
+    if (start.row!=end.row) count++
+    if (start.column!=end.column)count++
+    return count
+}
 
 /**
  * Средняя
