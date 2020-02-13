@@ -481,6 +481,7 @@ fun russian(n: Int): String {
         println(number)
         if ((digit == 5) && (number[0].toInt() != 0) && (number[0].toInt() != 1)) {
             for (j in numbers4) {
+                print(number[0])
                 if (number[0].toInt() == numbers4[j]) count = j
             }
             for (i in numbers2.indices) {

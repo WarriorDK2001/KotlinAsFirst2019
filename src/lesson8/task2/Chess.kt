@@ -23,7 +23,7 @@ data class Square(val column: Int, val row: Int) {
      * Для клетки не в пределах доски вернуть пустую строку
      */
     fun notation(): String {
-        if ((column == 0) || (row == 0)||(column >8) || (row > 8)) return ""
+        if ((column <= 0) || (row <= 0)||(column >8) || (row > 8)) return ""
         var word = (" a b c d e f g h").split(" ")
         var total = ""
         for (i in word.indices) {
@@ -47,6 +47,9 @@ fun square(notation: String): Square {
     if (notation.length<2) throw IllegalArgumentException()
     var not = notation.trim().split("")
     var word = listOf("a", "b", "c", "d", "e", "f", "g", "h")
+    for (i in word.indices) {
+        if (not[2].contains(word[i])) throw IllegalArgumentException()
+    }
     var number = listOf(1, 2, 3, 4, 5, 6, 7, 8)
     var column = 0
     for (i in word.indices) {
@@ -84,7 +87,7 @@ fun square(notation: String): Square {
 fun rookMoveNumber(start: Square, end: Square): Int {
     print(end)
     print(start)
-    if ((start.row>8)||(start.row==0)||(start.column>8)||(start.column==0)) throw IllegalArgumentException()
+    if ((start.row>8)||(start.row<=0)||(end.column>8)||(end.column<=0)) throw IllegalArgumentException()
     var count = 0
     if (start.row != end.row) count++
     if (start.column != end.column) count++
