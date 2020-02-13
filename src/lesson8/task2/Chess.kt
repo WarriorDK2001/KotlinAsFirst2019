@@ -1,7 +1,7 @@
 @file:Suppress("UNUSED_PARAMETER")
 
 package lesson8.task2
-
+import java.lang.IllegalArgumentException
 /**
  * Клетка шахматной доски. Шахматная доска квадратная и имеет 8 х 8 клеток.
  * Поэтому, обе координаты клетки (горизонталь row, вертикаль column) могут находиться в пределах от 1 до 8.
@@ -45,15 +45,16 @@ data class Square(val column: Int, val row: Int) {
  */
 fun square(notation: String): Square {
     var not = notation.trim().split("")
-    var word = listOf("a", "b", "c" ,"d" ,"e" ,"f" ,"g" ,"h")
-    var number = listOf(1,2,3,4,5,6,7,8)
-    var column =0
-    for (i in word.indices){
-        if (word[i]==not[1]) {
-            column = number[i]}
+    var word = listOf("a", "b", "c", "d", "e", "f", "g", "h")
+    var number = listOf(1, 2, 3, 4, 5, 6, 7, 8)
+    var column = 0
+    for (i in word.indices) {
+        if (word[i] == not[1]) {
+            column = number[i]
+        }
     }
     val row = not[2]
-    return Square(column,row.toInt())
+    return Square(column, row.toInt())
 }
 
 /**
@@ -79,12 +80,12 @@ fun square(notation: String): Square {
  * Пример: rookMoveNumber(Square(3, 1), Square(6, 3)) = 2
  * Ладья может пройти через клетку (3, 3) или через клетку (6, 1) к клетке (6, 3).
  */
-fun rookMoveNumber(start: Square, end: Square): Int  {
+fun rookMoveNumber(start: Square, end: Square): Int {
     print(end)
     print(start)
     var count = 0
-    if (start.row!=end.row) count++
-    if (start.column!=end.column)count++
+    if (start.row != end.row) count++
+    if (start.column != end.column) count++
     return count
 }
 
