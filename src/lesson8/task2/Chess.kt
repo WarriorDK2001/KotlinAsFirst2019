@@ -230,6 +230,30 @@ fun kingTrajectory(start: Square, end: Square): List<Square> {
     var y = 0
     var rowdifference = end.row - start.row
     var columndifference = end.column - start.column
+    if (rowdifference == 0) {
+        while ((columndifference != 0) && (columndifference > 0)) {
+            columndifference--
+            x++
+            way.add(Square(start.column + x, start.row + y))
+        }
+        while ((columndifference != 0) && (columndifference < 0)) {
+            columndifference++
+            x--
+            way.add(Square(start.column + x, start.row + y))
+        }
+    }
+    if (columndifference == 0) {
+        while ((columndifference > 0) && (columndifference != 0)) {
+            rowdifference--
+            y++
+            way.add(Square(start.column + x, start.row + y))
+        }
+        while ((columndifference < 0) && (columndifference != 0)) {
+            rowdifference++
+            y--
+            way.add(Square(start.column + x, start.row + y))
+        }
+    }
     if ((rowdifference > 0) && (columndifference > 0)) {
         while ((rowdifference != 0) && (columndifference != 0)) {
             rowdifference--
@@ -309,8 +333,6 @@ fun kingTrajectory(start: Square, end: Square): List<Square> {
             way.add(Square(start.column + x, start.row + y))
         }
     }
-    println(columndifference)
-    println(rowdifference)
     return way
 }
 
