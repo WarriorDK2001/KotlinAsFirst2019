@@ -2,6 +2,7 @@
 
 package lesson7.task1
 
+import ru.spbstu.kotlin.typeclass.kind
 import java.io.File
 
 /**
@@ -252,8 +253,36 @@ fun transliterate(inputName: String, dictionary: Map<Char, String>, outputName: 
  * Обратите внимание: данная функция не имеет возвращаемого значения
  */
 fun chooseLongestChaoticWord(inputName: String, outputName: String) {
-    TODO()
+    val writer = File(outputName).bufferedWriter()
+    var words = mutableMapOf<String, Int>()
+    var reader = File(inputName).readLines()
+    var count = 1
+    var check1 = 0
+    var check2 = 0
+    var maxlength = 0
+    var total = ""
+    for (lines in reader) {
+        check1 = lines.toLowerCase().trim().split("").toSet().size
+        check2 = lines.toLowerCase().trim().split("").toList().size - 1
+        if (check1 == check2) {
+            words[lines] = lines.length
+            print(words)
+        }
+    }
+    for ((key, value) in words) {
+        if (value > maxlength) maxlength = value
+    }
+    println(maxlength)
+    for ((key, value) in words) {
+        if (value == maxlength) {
+            writer.write(key)
+            if (count<words.size) writer.write(", ")
+        }
+        count++
+    }
+    writer.close()
 }
+
 
 /**
  * Сложная

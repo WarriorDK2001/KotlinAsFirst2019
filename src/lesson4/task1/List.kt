@@ -457,7 +457,7 @@ fun russian(n: Int): String {
         "четырнадцать", "пятнадцать", "шестнадцать", "семнадцать", "восемнадцать", "девятнадцать"
     )
     var numbers2 = listOf(
-        "", "десять", "двадцать", "тридцать", "сорок", "пятьдесят", "шестьдесят", "семьдесят", "восемьдесят",
+        " ", "десять", "двадцать", "тридцать", "сорок", "пятьдесят", "шестьдесят", "семьдесят", "восемьдесят",
         "девяносто"
     )
     var numbers3 =
@@ -465,8 +465,8 @@ fun russian(n: Int): String {
     var numbers4 = listOf(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
     var total = ""
     if (digit > 3) {
-        if (digit == 6) {
-            for (j in numbers4) {
+        while (digit == 6) {
+            for (j in numbers4.indices) {
                 if (number[0].toInt() == numbers4[j]) count = j
             }
             for (i in numbers3.indices) {
@@ -479,48 +479,55 @@ fun russian(n: Int): String {
             }
         }
         println(number)
-        if ((digit == 5) && (number[0].toInt() != 0) && (number[0].toInt() != 1)) {
-            for (j in numbers4) {
-                print(number[0])
-                if (number[0].toInt() == numbers4[j]) count = j
-            }
-            for (i in numbers2.indices) {
-                if (count == i) {
-                    total += " "
-                    print(numbers2[i])
-                    total += if (numbers2[i] =="два") "две"
-                    else numbers2[i]
-                    number.remove(number[0])
-                    digit--
+        println(number[0].toInt())
+        println(digit)
+        while (digit == 5) {
+            print(number[0])
+            if (number[0].toInt() > 1) {
+                for (j in numbers4.indices) {
+                    print(number[0])
+                    if (number[0].toInt() == numbers4[j]) count = j
+                }
+                for (i in numbers2.indices) {
+                    if (count == i) {
+                        total += " "
+                        print(numbers2[i])
+                        total += numbers2[i]
+                        number.remove(number[0])
+                        digit--
+                    }
                 }
             }
-        }
-        if (number[0].toInt() == 1) {
-            for (j in numbers4) {
-                if (number[1].toInt() == numbers4[j]) count = j
-            }
-            for (i in numbers5.indices) {
-                if (count == i) {
-                    total += " "
-                    total += numbers5[i]
-                    number.remove(number[0])
-                    number.remove(number[0])
-                    digit -= 2
+            if(digit!=5)  break
+            if (number[0].toInt() == 1) {
+                for (j in numbers4.indices) {
+                    if (number[1].toInt() == numbers4[j]) count = j
+                }
+                for (i in numbers5.indices) {
+                    if (count == i) {
+                        total += " "
+                        total += numbers5[i]
+                        number.remove(number[0])
+                        number.remove(number[0])
+                        digit -= 2
+                    }
                 }
             }
+            if(digit!=5)  break
+            if (number[0].toInt() == 0) {
+                number.remove(number[0])
+                digit--
+            }
         }
-        if (number[0].toInt() == 0) {
-            number.remove(number[0])
-            digit--
-        }
-        if (digit == 4) {
-            for (j in numbers4) {
+        while (digit == 4) {
+            for (j in numbers4.indices) {
                 if (number[0].toInt() == numbers4[j]) count = j
             }
             for (i in numbers1.indices) {
                 if (count == i) {
                     total += " "
-                    total += numbers1[i]
+                    total += if (numbers1[i] == "два") "две"
+                    else numbers1[i]
                 }
             }
         }
@@ -529,37 +536,42 @@ fun russian(n: Int): String {
         else " тысяч "
         number.remove(number[0])
     }
-    if (digit == 3)
-        for (j in numbers4) {
+    while (digit == 3) {
+        for (j in numbers4.indices) {
             if (number[0].toInt() == numbers4[j]) count = j
         }
-    for (i in numbers3.indices) {
-        if (count == i) {
-            total += " "
-            total += numbers3[i]
-            number.remove(number[0])
-            digit--
-        }
-    }
-    if ((digit == 2) && (number[0].toInt() != 0) && (number[0].toInt() != 1)) {
-        for (j in numbers4) {
-            if (number[0].toInt() == numbers4[j]) count = j
-        }
-        for (i in numbers2.indices) {
+        for (i in numbers3.indices) {
             if (count == i) {
                 total += " "
-                total += numbers2[i]
+                total += numbers3[i]
                 number.remove(number[0])
                 digit--
             }
         }
-    } else {
+    }
+    while (digit == 2) {
+        if (number[0].toInt() > 1) {
+            for (j in numbers4.indices) {
+                if (number[0].toInt() == numbers4[j]) count = j
+            }
+            for (i in numbers2.indices) {
+                if (count == i) {
+                    total += " "
+                    total += numbers2[i]
+                    number.remove(number[0])
+                    digit--
+                }
+            }
+        }
+        if(digit!=2)  break
         if (number[0].toInt() == 0) {
             number.remove(number[0])
             digit--
+            break
         }
+        if(digit!=2)  break
         if (number[0].toInt() == 1) {
-            for (j in numbers4) {
+            for (j in numbers4.indices) {
                 if (number[1].toInt() == numbers4[j]) count = j
             }
             for (i in numbers5.indices) {
@@ -574,14 +586,16 @@ fun russian(n: Int): String {
         }
     }
     println(total)
-    if (digit == 1) {
-        for (j in numbers4) {
+    println(number)
+    while (digit == 1) {
+        for (j in numbers4.indices) {
             if (number[0].toInt() == numbers4[j]) count = j
         }
         for (i in numbers1.indices) {
             if (count == i) {
                 total += " "
                 total += numbers1[i]
+                number.remove(number[0])
             }
         }
     }
