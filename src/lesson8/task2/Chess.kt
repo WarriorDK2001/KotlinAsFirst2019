@@ -220,7 +220,99 @@ fun kingMoveNumber(start: Square, end: Square): Int {
  *          kingTrajectory(Square(3, 5), Square(6, 2)) = listOf(Square(3, 5), Square(4, 4), Square(5, 3), Square(6, 2))
  * Если возможно несколько вариантов самой быстрой траектории, вернуть любой из них.
  */
-fun kingTrajectory(start: Square, end: Square): List<Square> = TODO()
+fun kingTrajectory(start: Square, end: Square): List<Square> {
+    if ((start.row > 8) || (start.column > 8) || (start.row <= 0) || (start.column <= 0)
+        || (end.row > 8) || (end.column > 8) || (end.row <= 0) || (end.column <= 0)
+    ) throw IllegalArgumentException()
+    var way = mutableListOf(start)
+    if (start == end) return way
+    var x = 0
+    var y = 0
+    var rowdifference = end.row - start.row
+    var columndifference = end.column - start.column
+    if ((rowdifference > 0) && (columndifference > 0)) {
+        while ((rowdifference != 0) && (columndifference != 0)) {
+            rowdifference--
+            columndifference--
+            y++
+            x++
+            way.add(Square(start.column + x, start.row + y))
+        }
+        while (rowdifference != 0) {
+            rowdifference--
+            y++
+            way.add(Square(start.column + x, start.row + y))
+        }
+        while (columndifference != 0) {
+            columndifference--
+            x++
+            way.add(Square(start.column + x, start.row + y))
+        }
+    }
+    if ((rowdifference < 0) && (columndifference > 0)) {
+        while ((rowdifference != 0) && (columndifference != 0)) {
+            rowdifference++
+            columndifference--
+            y--
+            x++
+            way.add(Square(start.column + x, start.row + y))
+        }
+        while (rowdifference != 0) {
+            rowdifference++
+            y--
+            way.add(Square(start.column + x, start.row + y))
+        }
+        while (columndifference != 0) {
+            columndifference--
+            x++
+            way.add(Square(start.column + x, start.row + y))
+        }
+    }
+    if ((rowdifference > 0) && (columndifference < 0)) {
+        while ((rowdifference != 0) && (columndifference != 0)) {
+            rowdifference--
+            columndifference++
+            y++
+            x--
+            way.add(Square(start.column + x, start.row + y))
+            println(way)
+        }
+        while (rowdifference != 0) {
+            rowdifference--
+            y++
+            way.add(Square(start.column + x, start.row + y))
+            println(way)
+        }
+        while (columndifference != 0) {
+            columndifference++
+            x--
+            way.add(Square(start.column + x, start.row + y))
+            println(way)
+        }
+    }
+    if ((rowdifference < 0) && (columndifference < 0)) {
+        while ((rowdifference != 0) && (columndifference != 0)) {
+            rowdifference++
+            columndifference++
+            y--
+            x--
+            way.add(Square(start.column + x, start.row + y))
+        }
+        while (rowdifference != 0) {
+            rowdifference++
+            y--
+            way.add(Square(start.column + x, start.row + y))
+        }
+        while (columndifference != 0) {
+            columndifference++
+            x--
+            way.add(Square(start.column + x, start.row + y))
+        }
+    }
+    println(columndifference)
+    println(rowdifference)
+    return way
+}
 
 /**
  * Сложная
